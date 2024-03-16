@@ -1,10 +1,10 @@
-version: "3.8"
+version: '3.8'
 services:
   catalog-service:
     depends_on:
       - bookshop-postgres
-    image: "catalog-service"
-    container_name: "catalog-service"
+    image: 'catalog-service'
+    container_name: 'catalog-service'
     ports:
       - 9001:9001
     environment:
@@ -15,21 +15,22 @@ services:
   order-service:
     depends_on:
       - bookshop-postgres
-    image: "order-service"
-    container_name: "order-service"
+    image: 'order-service'
+    container_name: 'order-service'
     ports:
       - 9002:9002
     environment:
       # Buildpacks environment variable to enable debug through a socket on port 8002
       - BPL_DEBUG_ENABLED=true
       - BPL_DEBUG_PORT=8002
+      
       - BOOKSHOP_CATALOG_SERVICE_URI=http://catalog-service:9001
       - SPRING_R2DBC_URL=r2dbc:postgresql://bookshop-postgres:5432/bookshopdb_order
       - SPRING_FLYWAY_URL=jdbc:postgresql://bookshop-postgres:5432/bookshopdb_order
 
   bookshop-postgres:
-    image: "postgres:16.2"
-    container_name: "bookshop-postgres"
+    image: 'postgres:16.2'
+    container_name: 'bookshop-postgres'
     ports:
       - 5432:5432
     environment:
